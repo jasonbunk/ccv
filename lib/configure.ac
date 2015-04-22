@@ -2,7 +2,7 @@ AC_INIT([libccv], [0.6])
 
 AC_SUBST(DEFINE_MACROS, [""])
 AC_SUBST(MKCFLAGS, [""])
-AC_SUBST(MKLDFLAGS, ["-lm "])
+AC_SUBST(MKLDFLAGS, ["-lm -pthread "])
 AC_SUBST(CUDA_OBJS, ["cuda/cwc_convnet.o cuda/cwc_convnet_helper.o cuda/convnet/cwc_convnet_convolutional.o cuda/convnet/cwc_convnet_rnorm.o cuda/convnet/cwc_convnet_pool.o cuda/convnet/cwc_convnet_full_connect.o"])
 
 # check if clang exists
@@ -41,7 +41,7 @@ if test "$blas_ok" = yes; then
 	AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS$BLAS_LIBS "])
 fi
 
-# check for libpng, libjpeg, fftw3, liblinear, Accelerate framework, avformat, avcodec, swscale
+# check for libpng, libjpeg, fftw3, liblinear, Accelerate framework, avformat, avcodec, avutil, swscale, swresample, lzma
 AC_CHECK_HEADER(png.h,
 				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_LIBPNG "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-lpng "])])
 AC_CHECK_HEADER(jpeglib.h,
@@ -54,12 +54,18 @@ AC_CHECK_HEADER(tesseract/capi.h,
 				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_TESSERACT "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-ltesseract "])])
 AC_CHECK_HEADER([Accelerate/Accelerate.h],
 				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_ACCELERATE_FRAMEWORK "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-framework Accelerate "])])
-AC_CHECK_HEADER([libavcodec/avcodec.h],
-				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_AVCODEC "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-lavcodec "])])
 AC_CHECK_HEADER([libavformat/avformat.h],
 				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_AVFORMAT "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-lavformat "])])
+AC_CHECK_HEADER([libavcodec/avcodec.h],
+				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_AVCODEC "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-lavcodec "])])
+AC_CHECK_HEADER([libavutil/avutil.h],
+				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_AVUTIL "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-lavutil "])])
 AC_CHECK_HEADER([libswscale/swscale.h],
 				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_SWSCALE "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-lswscale "])])
+AC_CHECK_HEADER([libswresample/swresample.h],
+				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_SWRESAMPLE "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-lswresample "])])
+AC_CHECK_HEADER([lzma.h],
+				[AC_SUBST(DEFINE_MACROS, ["$DEFINE_MACROS-D HAVE_LZMA "]) AC_SUBST(MKLDFLAGS, ["$MKLDFLAGS-llzma "])])
 # only check dispatch if compiled with clang
 if test $CC = clang; then
 	AC_CHECK_HEADER([dispatch/dispatch.h],

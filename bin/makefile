@@ -1,7 +1,7 @@
 include ../lib/config.mk
 
 # CC += -g -fsanitize=address -fno-omit-frame-pointer # -fprofile-arcs -ftest-coverage
-LDFLAGS := -L"../lib" -lccv $(LDFLAGS)
+LDFLAGS := -L"../lib" -lccv $(LDFLAGS) -lz
 CFLAGS := -O3 -Wall -I"../lib" $(CFLAGS)
 
 TARGETS = bbffmt msermatch siftmatch bbfcreate bbfdetect scdcreate scddetect swtcreate swtdetect dpmcreate dpmdetect tld icfcreate icfdetect icfoptimize cifar-10 image-net cnnclassify aflw

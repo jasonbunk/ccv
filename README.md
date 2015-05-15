@@ -52,6 +52,20 @@ high-performance, battle-tested but old algorithm implementations, or the new,
 shining but Matlab algorithms. ccv is my take on this problem, hope you enjoy
 it.
 
+Compiliation
+-----------------------------------------------
+In the "lib" folder, use autoconf, configure, and make.
+
+cd lib
+
+autoconf
+
+./configure
+
+make -j 4
+
+Then, in the "bin" folder, use make.
+
 License
 -------
 
